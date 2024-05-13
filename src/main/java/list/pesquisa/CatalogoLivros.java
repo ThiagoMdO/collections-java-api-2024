@@ -12,11 +12,19 @@ public class CatalogoLivros {
         livroList = new ArrayList<>();
     }
 
+    public void verificarSeHaLivros(){
+        if (livroList.isEmpty()) {
+            throw new RuntimeException("Lista Vazia");
+        }
+    }
+
+
     public void adicionarLivro(String titulo, String autor, Integer anoPublicacao){
         livroList.add(new Livro(titulo, autor, anoPublicacao));
     }
 
     public void pesquisarPorAutor_Lambda(String autor){
+        verificarSeHaLivros();
         livroList.stream()
                     .filter(livro -> livro.getAutor()
                     .equalsIgnoreCase(autor))
@@ -25,6 +33,7 @@ public class CatalogoLivros {
     }
 
     public void pesquisarPorAutor_For(String autor){
+        verificarSeHaLivros();
         for (Livro livro : livroList){
             if (livro.getAutor().equalsIgnoreCase(autor)){
                 System.out.println(livro);
@@ -33,6 +42,7 @@ public class CatalogoLivros {
     }
 
     public void pesquisarPorIntervaloAnos_Lambda(Integer anoInicial, Integer anoFinal){
+        verificarSeHaLivros();
         livroList.stream()
                     .filter(livro -> livro.getAnoPublicacao() >= anoInicial && livro.getAnoPublicacao() <= anoFinal)
                     .sorted(Comparator.comparingInt(Livro::getAnoPublicacao))
@@ -40,6 +50,7 @@ public class CatalogoLivros {
     }
 
     public void pesquisarPorIntervaloAnos_For(Integer anoInicial, Integer anoFinal){
+        verificarSeHaLivros();
         for (Livro livro : livroList){
             if (livro.getAnoPublicacao() >= anoInicial && livro.getAnoPublicacao() <= anoFinal){
                 System.out.println(livro);
@@ -48,6 +59,7 @@ public class CatalogoLivros {
     }
 
     public void pesquisarPorTitulo_Lambda(String titulo){
+        verificarSeHaLivros();
         livroList.stream()
                     .filter(livro -> livro.getTitulo().equalsIgnoreCase(titulo))
                     .findFirst()
@@ -58,6 +70,7 @@ public class CatalogoLivros {
     }
 
     public void pesquisaPorTitulo_For(String titulo){
+        verificarSeHaLivros();
         for (Livro livro : livroList){
             if (livro.getTitulo().equalsIgnoreCase(titulo)){
                 System.out.println(livro);
@@ -67,7 +80,8 @@ public class CatalogoLivros {
     }
 
     public static void main(String[] args) {
-        CatalogoLivros catalogoLivros = new CatalogoLivros();
+        try{
+            CatalogoLivros catalogoLivros = new CatalogoLivros();
 
         catalogoLivros.adicionarLivro("As aventuras 1", "Gustavo", 2001);
         catalogoLivros.adicionarLivro("As aventuras 1", "Gustavo", 2001);
@@ -78,23 +92,27 @@ public class CatalogoLivros {
         catalogoLivros.adicionarLivro("A Historia 2", "Fabricio", 2009);
         catalogoLivros.adicionarLivro("As Historia 3", "Fabricio", 2006);
 
-        catalogoLivros.pesquisaPorTitulo_For("As aventuras 1");
-        System.out.println();
+            catalogoLivros.pesquisaPorTitulo_For("As aventuras 1");
+            System.out.println();
 
-        catalogoLivros.pesquisarPorAutor_For("Fabricio");
-        System.out.println();
+            catalogoLivros.pesquisarPorAutor_For("Fabricio");
+            System.out.println();
 
-        catalogoLivros.pesquisarPorIntervaloAnos_For(2001, 2005);
-        System.out.println();
-        System.out.println();
-        System.out.println("Com funções Lambda");
+            catalogoLivros.pesquisarPorIntervaloAnos_For(2001, 2005);
+            System.out.println();
+            System.out.println();
+            System.out.println("Com funções Lambda");
 
-        catalogoLivros.pesquisarPorTitulo_Lambda("As aventuras 2");
-        System.out.println();
+            catalogoLivros.pesquisarPorTitulo_Lambda("As aventuras 2");
+            System.out.println();
 
-        catalogoLivros.pesquisarPorAutor_Lambda("Gustavo");
-        System.out.println();
+            catalogoLivros.pesquisarPorAutor_Lambda("Gustavo");
+            System.out.println();
 
-        catalogoLivros.pesquisarPorIntervaloAnos_Lambda(2003, 2006);
+            catalogoLivros.pesquisarPorIntervaloAnos_Lambda(2003, 2006);
+        }catch (RuntimeException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+
     }
 }
