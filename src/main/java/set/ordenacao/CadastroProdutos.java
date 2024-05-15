@@ -29,7 +29,7 @@ public class CadastroProdutos {
     }
 
     public Set<Produto> exibirProdutosPorPreco(){
-        //Não seram exibidos os produtos que tiverem os mesmos preços
+        //Não seram exibidos os produtos que tiverem os mesmos preços, menos interessante usar um compator para ordenar informações que podem repetir
         Set<Produto> produtoSetPorPreco = new TreeSet<>(new ComparatorPorPreco());
         produtoSetPorPreco.addAll(produtoSet);
         return produtoSetPorPreco;
@@ -47,7 +47,7 @@ public class CadastroProdutos {
 //        System.out.println(cadastroProdutos.exibirProdutosPorNome_Lambda());
 //        System.out.println(cadastroProdutos.exibirProdutosPorNome());
 
-//        System.out.println(cadastroProdutos.exibirProdutosPorPreco_Lambda());
-        System.out.println(cadastroProdutos.exibirProdutosPorPreco());
+        System.out.println(cadastroProdutos.exibirProdutosPorPreco_Lambda());
+//        System.out.println(cadastroProdutos.exibirProdutosPorPreco());
     }
 }
